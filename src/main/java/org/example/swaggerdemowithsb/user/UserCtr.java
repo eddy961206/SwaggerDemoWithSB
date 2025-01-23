@@ -1,18 +1,15 @@
-package org.example.swaggerdemowithsb;
+package org.example.swaggerdemowithsb.user;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.swaggerdemowithsb.user.UserDto;
-import org.example.swaggerdemowithsb.user.UserRole;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@Tag(name = "메인 API", description = "사용자 관리 API")
-public class ApiCtr {
+@Tag(name = "사용자 API", description = "사용자 관리 API")
+public class UserCtr {
 
     /*
      * 어노테이션 정리
