@@ -45,7 +45,7 @@ public class SwaggerConfig {
                 );
     }
 
-    // API 그룹화
+    // API 그룹화 - SpringDoc의 그룹화 기능
     @Bean
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
