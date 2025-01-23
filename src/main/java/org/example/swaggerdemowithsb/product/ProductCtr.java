@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/products")
-@Tag(name = "상품 API", description = "상품 관리 API")
+@RequestMapping("/products")
+@Tag(name = "2-상품 API", description = "상품 관리 API")
 public class ProductCtr {
 
     @Operation(summary = "전체 상품 조회", description = "모든 상품 목록을 조회합니다")

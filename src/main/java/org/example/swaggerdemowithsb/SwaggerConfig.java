@@ -7,6 +7,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.tags.Tag;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,12 +46,12 @@ public class SwaggerConfig {
                 );
     }
 
-    // API 그룹화 - SpringDoc의 그룹화 기능
-    @Bean
-    public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("public-api")
-                .pathsToMatch("/api/**")
-                .build();
-    }
+//    // API 그룹화 - 경로 또는 패키지별로 묶음
+//    @Bean
+//    public GroupedOpenApi publicApi() {
+//        return GroupedOpenApi.builder()
+//                .group("public-api")
+//                .pathsToMatch("/products/**")  // /api/** 경로의 API를 public-api 그룹으로 묶음. 태그와 다름
+//                .build();
+//    }
 }

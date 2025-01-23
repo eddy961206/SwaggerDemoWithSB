@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
-@Tag(name = "사용자 API", description = "사용자 관리 API")
+@RequestMapping("/user")
+@Tag(name = "1-사용자 API", description = "사용자 관리 API")
 public class UserCtr {
 
     /*

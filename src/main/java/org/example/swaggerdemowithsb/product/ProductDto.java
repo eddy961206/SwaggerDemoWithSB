@@ -16,4 +16,17 @@ public class ProductDto {
     @Schema(description = "상품 가격", example = "1000000", minimum = "0")
     @Min(0)
     private int price;
+
+    public String getName() {
+        return name;
+    }
+    public int getPrice() {
+        return price;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }
