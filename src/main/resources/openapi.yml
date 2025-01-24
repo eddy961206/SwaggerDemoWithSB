@@ -1,0 +1,402 @@
+openapi: 3.1.1
+info:
+  title: Swagger Demo API
+  summary: 사용자 및 상품 관리를 위한 데모 API
+  description: API documentation for Swagger Demo with Spring Boot
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: 로컬 개발 서버
+
+paths:
+  /user/get1:
+    get:
+      tags:
+        - 1-사용자 API
+      summary: GET 예시
+      description: 간단한 GET 요청 테스트
+      operationId: getUserExample1
+      responses:
+        '200':
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                default:
+                  value: "Hello World"
+
+  /user/get2:
+    get:
+      tags:
+        - 1-사용자 API
+      summary: GET 예시2 (파라미터 입력)
+      description: 여러 파라미터를 받는 GET 요청 테스트
+      operationId: getUserExample2
+      parameters:
+        - name: age
+          in: query
+          description: 사용자 나이
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            examples: [25]
+        - name: name
+          in: query
+          description: 사용자 이름
+          required: true
+          schema:
+            type: string
+            minLength: 2
+            examples: ["홍길동"]
+        - name: job
+          in: query
+          description: 사용자 직업
+          required: false
+          schema:
+            type: string
+            examples: ["개발자"]
+      responses:
+        '200':
+          description: 요청 성공
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                successResponse:
+                  value: "처리 완료: 홍길동(25세)"
+
+  /user/role:
+    get:
+      tags:
+        - 1-사용자 API
+      summary: 역할 조회
+      description: 사용자 역할을 조회합니다.
+      operationId: getUserRole
+      parameters:
+        - name: role
+          in: query
+          description: 사용자 역할
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserRole'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRole'
+              examples:
+                adminExample:
+                  value: "ADMIN"
+
+  /user/post1:
+    post:
+      tags:
+        - 1-사용자 API
+      summary: 사용자 생성
+      description: 사용자 정보를 입력받아 생성합니다.
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+            examples:
+              sampleUser:
+                value:
+                  id: 1
+                  name: 홍길동
+                  email: gil@example.com
+      responses:
+        '201':
+          description: 사용자 생성 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+
+  /user/put1/{id}:
+    put:
+      tags:
+        - 1-사용자 API
+      summary: 사용자 수정
+      description: ID로 사용자 이름을 수정합니다.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: 수정할 사용자 ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - name: name
+          in: query
+          description: 수정할 사용자 이름
+          required: true
+          schema:
+            type: string
+            example: 홍길둥
+      responses:
+        '200':
+          description: 사용자 이름 수정 성공
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "이름 변경 완료"
+
+  /user/delete1/{id}:
+    delete:
+      tags:
+        - 1-사용자 API
+      summary: 사용자 삭제
+      description: ID로 사용자를 삭제합니다.
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: 삭제할 사용자 ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '204':
+          description: 사용자 삭제 성공
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "삭제 완료"
+
+  /products/list:
+    get:
+      tags:
+        - 2-상품 API
+      summary: 전체 상품 조회
+      description: 모든 상품 목록을 조회합니다
+      operationId: listProducts
+      responses:
+        '200':
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "상품 목록: [노트북, 마우스]"
+
+  /products/search:
+    get:
+      tags:
+        - 2-상품 API
+      summary: 상품 검색
+      description: 여러 조건으로 상품을 검색합니다
+      operationId: searchProducts
+      parameters:
+        - name: price
+          in: query
+          description: 상품 가격
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: 10000
+        - name: name
+          in: query
+          description: 상품명
+          required: true
+          schema:
+            type: string
+            example: 노트북
+        - name: brand
+          in: query
+          description: 브랜드
+          required: false
+          schema:
+            type: string
+            example: 삼성
+      responses:
+        '200':
+          description: 검색 성공
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "검색 결과: 3건"
+
+  /products/category:
+    get:
+      tags:
+        - 2-상품 API
+      summary: 카테고리 조회
+      description: 상품 카테고리를 조회합니다
+      operationId: getProductCategory
+      parameters:
+        - name: category
+          in: query
+          description: 상품 카테고리
+          required: true
+          schema:
+            $ref: '#/components/schemas/ProductCategory'
+      responses:
+        '200':
+          description: 상품 조회 성공!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+              examples:
+                electronicsExample:
+                  value: "ELECTRONICS"
+
+  /products/new:
+    post:
+      tags:
+        - 2-상품 API
+      summary: 상품 등록
+      description: 새로운 상품을 등록합니다
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDto'
+            examples:
+              sampleProduct:
+                value:
+                  id: 1001
+                  name: "갤럭시 북"
+                  price: 1500000
+                  brand: "삼성"
+                  category: "ELECTRONICS"
+      responses:
+        '201':
+          description: 상품 등록 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+
+  /products/update/{id}:
+    put:
+      tags:
+        - 2-상품 API
+      summary: 상품 수정
+      description: 상품 정보를 수정합니다
+      operationId: updateProduct
+      parameters:
+        - name: id
+          in: path
+          description: 수정할 상품 ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - name: name
+          in: query
+          description: 수정할 상품명
+          required: true
+          schema:
+            type: string
+            example: 고급 노트북
+      responses:
+        '200':
+          description: 상품 수정 성공
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "상품명 변경 완료"
+
+  /products/delete/{id}:
+    delete:
+      tags:
+        - 2-상품 API
+      summary: 상품 삭제
+      description: 상품을 삭제합니다
+      operationId: deleteProduct
+      parameters:
+        - name: id
+          in: path
+          description: 삭제할 상품 ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '204':
+          description: 상품 삭제 성공
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: "상품 삭제됨"
+
+components:
+  schemas:
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+          example: 1
+        name:
+          type: string
+          minLength: 2
+          example: 홍길동
+        email:
+          type: string
+          format: email
+          example: user@example.com
+      required: [id, name, email]
+
+    UserRole:
+      type: string
+      enum: [ADMIN, USER, GUEST]
+      example: USER
+
+    ProductDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1001
+        name:
+          type: string
+          example: "갤럭시 북"
+        price:
+          type: integer
+          format: int32
+          minimum: 0
+          example: 1500000
+        brand:
+          type: string
+          example: 삼성
+        category:
+          type: string
+          example: ELECTRONICS
+      required: [id, name, price]
+
+    ProductCategory:
+      type: string
+      enum:
+        - ELECTRONICS
+        - BOOKS
+        - CLOTHING
+        - GROCERIES
+        - HOME_GOODS
+      example: ELECTRONICS
