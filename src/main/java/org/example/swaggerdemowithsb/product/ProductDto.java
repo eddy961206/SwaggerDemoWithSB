@@ -9,12 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductDto {
-    @Schema(description = "상품명", example = "갤럭시 노트북", required = true)
-    @NotBlank
     private String name;
 
-    @Schema(description = "상품 가격", example = "1000000", minimum = "0")
-    @Min(0)
     private int price;
 
     public String getName() {
